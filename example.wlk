@@ -31,16 +31,19 @@ class Evento {
 
 // EMOCIONES
 class Emocion {
-  var property eventosExperimentados
+  const eventosExperimentados = []
   var property fuiLiberada = false
   var property intensidad
 
+  method eventosExperimentados() = eventosExperimentados.size()
   method puedeLiberarse() = intensidad > manejoIntensidad.intensidadElevada() && !fuiLiberada
   method liberarse(evento) {
     if(self.puedeLiberarse()) {
       self.efectoLiberarse(evento)
       fuiLiberada = true
     }
+    eventosExperimentados.add(evento)
+    // Considero que se agrega como evento experimentado despues de vivirlo
   }
   method efectoLiberarse(evento) {
     intensidad =- evento.impacto()
@@ -59,6 +62,7 @@ class Furia inherits Emocion(intensidad = 100) {
   method agregarPalabrota(palabra) {palabrotas.add(palabra)}
   method olvidarPalabrota() {palabrotas = palabrotas.drop(1)}
   method conozcoPalabrota() = palabrotas.any({palabra => palabra.size() > 7})
+  method cuantasPalabrotasConozco() = palabrotas.size() //Es para el segundo test
 
   override method puedeLiberarse() = super() && self.conozcoPalabrota()
   override method efectoLiberarse(evento) {
@@ -72,7 +76,7 @@ class Alegria inherits Emocion() {
     const resultadoResta = intensidad - evento.impacto()
     intensidad = resultadoResta.abs()
   }
-  override method puedeLiberarse() = super() && eventosExperimentados.even()
+  override method puedeLiberarse() = super() && self.eventosExperimentados().even()
 }
 
 class Tristeza inherits Emocion() {
@@ -94,7 +98,7 @@ class EmocionComun inherits Emocion() {
 // INTENSAMENTE 2
 
 class Ansiedad inherits Emocion(intensidad = 150) {
-  var property paranoia = 200
+  var property paranoia = 100
 
   override method puedeLiberarse() = paranoia > intensidad
   override method efectoLiberarse(evento) {
