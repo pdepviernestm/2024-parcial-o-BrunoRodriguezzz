@@ -1,9 +1,10 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+describe "Test de Intensa-mente" {
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+  test "Hacer que todos los integrantes de un grupo de personas vivan un mismo evento" {
+    // Instancias:
+    const pepe = new Persona()
   }
 
 }
