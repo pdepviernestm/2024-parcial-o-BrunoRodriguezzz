@@ -78,6 +78,8 @@ class Alegria inherits Emocion() {
     intensidad = resultadoResta.abs()
   }
   override method puedeLiberarse() = super() && self.eventosExperimentados().even()
+  // No uso un method intensidad() = intensidad.abs() porque entiendo que se busca evitar
+  // que directamente la variable intensidad tenga un valor negativo.
 }
 
 class Tristeza inherits Emocion() {
