@@ -1,9 +1,51 @@
-import example.pepita
+import example.*
 
-describe "group of tests for pepita" {
+describe "Test de Intensa-mente" {
+  test "Hacer que todos los integrantes de un grupo de personas vivan un mismo evento" {
+    // Instancias:
+    const furia1 = new Furia(palabrotas = ["abc", "abcdefghi"])
+    const alegria1 = new Alegria(intensidad = 40)
+    const alegria2 = new Alegria(intensidad = 70)
+    const desagrado = new EmocionComun(intensidad = 20)
+    const pepe = new Persona(edad = 64, emociones = [furia1, alegria1])
+    const carlos = new Persona(edad = 27, emociones = [alegria2, desagrado])
+    const grupo = new Grupo(integrantes = [pepe, carlos])
+    const evento = new Evento(impacto = 50, descripcion = "Perdí en AstroDefenders")
 
-  test "pepita has initial energy" {
-    assert.equals(100, pepita.energy())
+    // Asigno valor de intensidad eleveada
+    manejoIntensidad.intensidadElevada(30)
+
+    grupo.vivirEvento(evento)
+    // En este caso como el impacto es 50 la intensidad de alegría1 debería quedar en 10
+
+    assert.equals(10, alegria1.intensidad())
   }
 
+  test "Furia con una palabrota al liberarse queda sin palabrotas" {
+    const evento = new Evento(impacto = 50, descripcion = "Perdí en AstroDefenders")
+    const furia = new Furia(palabrotas = ["abcdefghi"])
+    const pepe = new Persona(edad = 64, emociones = [furia])
+    manejoIntensidad.intensidadElevada(30)
+
+    pepe.vivirEvento(evento)
+
+    assert.equals(0, furia.cuantasPalabrotasConozco())
+  }
+
+  test "Ansiedad debe tener una intensidad de 190 tras vivir 3 eventos" {
+    // El primer evento no la libera llevando la paranoia a 130
+    // El segundo evento no la libera llevando la paranoia a 160
+    // El tercer evento al tener paranoia > intensidad = 160 > 150 la libera
+    // Cuando la libera sube la intensidad en 40 quedando en 190
+
+    const ansiedad = new Ansiedad()
+    const pepe = new Persona(edad = 64, emociones = [ansiedad])
+    const evento = new Evento(impacto = 50, descripcion = "Perdí en AstroDefenders")
+
+    pepe.vivirEvento(evento)
+    pepe.vivirEvento(evento)
+    pepe.vivirEvento(evento)
+
+    assert.equals(190, ansiedad.intensidad())
+  }
 }
