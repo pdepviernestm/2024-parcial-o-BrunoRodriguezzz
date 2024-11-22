@@ -32,7 +32,7 @@ class Evento {
 // EMOCIONES
 class Emocion {
   const eventosExperimentados = []
-  var property fuiLiberada = false
+  var property fuiLiberada = false // Entiendo que es permanente
   var property intensidad
 
   method eventosExperimentados() = eventosExperimentados.size()
@@ -72,6 +72,7 @@ class Furia inherits Emocion(intensidad = 100) {
 }
 
 class Alegria inherits Emocion() {
+  override method intensidad(valor) {intensidad = valor.abs()} // Evito que se le den valores negativos
   override method efectoLiberarse(evento){
     const resultadoResta = intensidad - evento.impacto()
     intensidad = resultadoResta.abs()
